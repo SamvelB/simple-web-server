@@ -39,7 +39,7 @@
         </plugins>
         <resources>
             <resource>
-                <directory>/templates</directory>
+                <directory>${basedir}/templates</directory>
                 <includes>
                     <include>/*.html</include>
                     <include>/css/*.css</include>
