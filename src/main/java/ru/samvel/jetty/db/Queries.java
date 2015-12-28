@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,13 +15,14 @@ public class Queries{
 
     Connect connect = new Connect();
 
-    Map<Integer, Map<String, String>> mapPet = new HashMap<>();
-    Map<Integer, Map<String, String>> mapPetLife = new HashMap<>();
+    //Map<Integer, Map<String, String>> mapPet = new HashMap<>();
+    //Map<Integer, Map<String, String>> mapPetLife = new HashMap<>();
+    List listElements = new ArrayList();
 
     ResultSet result = null;
 
     // обработк SELECT запроса
-    public Map<Integer, Map<String, String>> sqlRequestSQL(String sql, String table) {
+    public List sqlRequestSQL(String sql, String table) {
         if (connect != null) {
             try {
                 // Установка соединения
@@ -45,7 +48,7 @@ public class Queries{
     }
 
 
-    private Map<Integer, Map<String, String>> parsRespond(String table) throws SQLException{
+    private List parsRespond(String table) throws SQLException{
         if(table.equals("bay")) {
             return parsRespondPet();
         }
@@ -57,17 +60,14 @@ public class Queries{
 
 
     // Парс ответа из базы в мапу
-    private Map<Integer, Map<String, String>> parsRespondPet() throws SQLException {
-        int i = 0;
+    private List parsRespondPet() throws SQLException {
         while (result.next()) {
             Map<String, String> mapPetRow = new HashMap <>();
-            mapPetRow.put("ID", result.getString("ID"));
             mapPetRow.put("NAME", result.getString("NAME"));
             mapPetRow.put("AMOUNT",result.getString("AMOUNT"));
-            mapPet.put(i, mapPetRow);
-            i++;
+            listElements.add(mapPetRow);
         }
-        return mapPet;
+        return listElements;
     }
 
 

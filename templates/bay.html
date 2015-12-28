@@ -12,7 +12,12 @@
     <li><a href="page">Page</a></li>
 </ul>
 
-${hello.get[0].ID}
+
+${message}
+<#list listElements as items>
+        <p>${items.NAME} - ${items.AMOUNT}</p>
+</#list>
+
 
 </body>
 </html>

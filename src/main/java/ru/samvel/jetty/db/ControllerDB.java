@@ -1,21 +1,22 @@
 package ru.samvel.jetty.db;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControllerDB {
 
 
     private Queries query = new Queries();
-    private Map<Integer, Map<String,String>> mapPetList = new HashMap<>();
+    //private Map<Integer, Map<String,String>> mapPetList = new HashMap<>();
+    List listElements = new ArrayList();
 
 
     // SELECT * FROM table
-    public Map<Integer, Map<String, String>> selectTable(String table){
+    public List selectTable(String table){
         String sql = "SELECT * FROM " + table;
-        mapPetList = query.sqlRequestSQL(sql, table);
-        return mapPetList;
+        listElements = query.sqlRequestSQL(sql, table);
+        return listElements;
     }
 
 

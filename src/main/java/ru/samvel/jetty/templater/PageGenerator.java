@@ -35,7 +35,7 @@ public class PageGenerator {
         return stream.toString();
     }
 
-    public String getBayPage(String filename, Map<Integer, Map<String, String>> data) {
+    public String getBayPage(String filename, Map<String, Object> data) {
         Writer stream = new StringWriter();
         try {
             Template template = cfg.getTemplate(HTML_DIR + File.separator + filename);
