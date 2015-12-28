@@ -35,6 +35,18 @@ public class PageGenerator {
         return stream.toString();
     }
 
+    public String getBayPage(String filename, Map<Integer, Map<String, String>> data) {
+        Writer stream = new StringWriter();
+        try {
+            Template template = cfg.getTemplate(HTML_DIR + File.separator + filename);
+            template.process(data, stream);
+        }
+        catch (IOException | TemplateException e) {
+            e.printStackTrace();
+        }
+        return stream.toString();
+    }
+
     public String getPage(String filename) {
         Writer stream = new StringWriter();
         try {

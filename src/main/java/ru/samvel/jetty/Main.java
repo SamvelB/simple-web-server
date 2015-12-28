@@ -3,11 +3,7 @@ package ru.samvel.jetty;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import ru.samvel.jetty.servlets.FormRequestsServlet;
-import ru.samvel.jetty.servlets.IndexRequestsServlet;
-import ru.samvel.jetty.servlets.PageRequestsServlet;
-import ru.samvel.jetty.servlets.SamvelRequestsServlet;
-
+import ru.samvel.jetty.servlets.*;
 
 
 public class Main {
@@ -20,7 +16,10 @@ public class Main {
         context.addServlet(new ServletHolder(new IndexRequestsServlet()), "/");
         context.addServlet(new ServletHolder(new FormRequestsServlet()), "/form");
         context.addServlet(new ServletHolder(new PageRequestsServlet()), "/page");
-        context.addServlet(new ServletHolder(new SamvelRequestsServlet()), "/samvel");
+        context.addServlet(new ServletHolder(new LoginRequestsServlet()), "/login");
+        context.addServlet(new ServletHolder(new LoginCheckRequestsServlet()), "/login-check");
+        context.addServlet(new ServletHolder(new ErrorRequestsServlet()), "/error");
+        context.addServlet(new ServletHolder(new BayRequestsServlet()), "/bay");
 
         server.start();
         server.join();

@@ -9,12 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-public class IndexRequestsServlet extends HttpServlet {
+public class ErrorRequestsServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("text/html;charset=utf-8");
-        response.getWriter().println(PageGenerator.instance().getPage("index.html"));
+            response.setContentType("text/html;charset=utf-8");
+            response.getWriter().println(PageGenerator.instance().getPage("error.html"));
+            response.setStatus(HttpServletResponse.SC_OK);
 
     }
 }
