@@ -15,7 +15,7 @@ public class PageRequestsServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, Object> pageVariables = createPageVariablesMap(request);
-        response.getWriter().println(PageGenerator.instance().getPage("page.html", pageVariables));
+        response.getWriter().println(PageGenerator.instance().getPage("/src/main/templates/page.html", pageVariables));
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
     }

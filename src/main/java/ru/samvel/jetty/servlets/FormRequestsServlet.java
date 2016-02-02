@@ -34,7 +34,7 @@ public class FormRequestsServlet extends HttpServlet {
         }
 
         response.setContentType("text/html;charset=utf-8");
-        response.getWriter().println(PageGenerator.instance().getPage("form.html", pageVariables));
+        response.getWriter().println(PageGenerator.instance().getPage("/src/main/templates/form.html", pageVariables));
     }
 
     private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {

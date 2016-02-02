@@ -47,7 +47,7 @@ public class SamvelRequestsServlet extends HttpServlet {
         }
         pageVariables.put("message", message == null ? "" : message);
 
-        response.getWriter().println(PageGenerator.instance().getPage("samvel.html", pageVariables));
+        response.getWriter().println(PageGenerator.instance().getPage("/src/main/templates/samvel.html", pageVariables));
     }
 
     private static Map<String, Object> createPageVariablesMap(HttpServletRequest request) {

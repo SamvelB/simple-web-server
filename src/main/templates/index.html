@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Index</title>
+</head>
+<body>
+<h1>Index</h1>
+<ul>
+    <li><a href="index">Index</a></li>
+    <li><a href="form">Form</a></li>
+    <li><a href="page">Page</a></li>
+</ul>
+<br /><br />
+
+<form action="/api/v1/sessions" method="post">
+    <label>
+        <div>Логин</div>
+        <input type="text" name="login" placeholder="Логин" />
+    </label>
+    <br /><br />
+    <label>
+        <div>Пароль</div>
+        <input type="text" name="pass" placeholder="Пароль" />
+    </label>
+    <br /><br />
+    <label>
+        <input type="submit" value="Отправить">
+    </label>
+
+
+</form>
+
+<!--<#if name??>
+    <p>Name: ${name}</p>
+</#if>
+<#if lastName??>
+    <p>LastName: ${lastName}</p>
+</#if>-->
+</body>
+</html>
+
