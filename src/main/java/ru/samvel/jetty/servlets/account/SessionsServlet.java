@@ -35,8 +35,7 @@ public class SessionsServlet extends HttpServlet {
     }
 
     //sign in
-    public void doPost(HttpServletRequest request,
-                       HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         String pass = request.getParameter("pass");
 
@@ -53,28 +52,16 @@ public class SessionsServlet extends HttpServlet {
             return;
         }
 
-        accountService.addSession(request.getSession().getId(), profile);
-        Gson gson = new Gson();
-        String json = gson.toJson(profile);
-        response.setContentType("text/html;charset=utf-8");
-        response.getWriter().println(json);
-        response.setStatus(HttpServletResponse.SC_OK);
-    }
-
-    //sign out
-    public void doDelete(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException {
-        String sessionId = request.getSession().getId();
-        UserProfile profile = accountService.getUserBySessionId(sessionId);
-        if (profile == null) {
+        if (profile.getPass().equals(login) && profile.getPass().equals(pass)) {
+            accountService.addSession(request.getSession().getId(), profile);
+            Gson gson = new Gson();
+            String json = gson.toJson(profile);
             response.setContentType("text/html;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        } else {
-            accountService.deleteSession(sessionId);
-            response.setContentType("text/html;charset=utf-8");
-            response.getWriter().println("Goodbye!");
+            response.getWriter().println(json);
             response.setStatus(HttpServletResponse.SC_OK);
         }
+        return;
 
     }
+
 }
