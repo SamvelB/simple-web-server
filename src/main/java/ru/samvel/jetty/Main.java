@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+
         ArrayList<String> bayNames = new ArrayList<>();
         BayListDBService bayListDBService = new BayListDBService();
         try {
@@ -54,6 +55,7 @@ public class Main {
         context.addServlet(new ServletHolder(new IndexRequestsServlet()), "/index");
         context.addServlet(new ServletHolder(new MainRequestsServlet()), "/main");
 
+        context.addServlet(new ServletHolder(new BayRequestsServlet()), "/bay");
         context.addServlet(new ServletHolder(new FormRequestsServlet()), "/form");
         context.addServlet(new ServletHolder(new PageRequestsServlet()), "/page");
         context.addServlet(new ServletHolder(new SamvelRequestsServlet()), "/samvel");

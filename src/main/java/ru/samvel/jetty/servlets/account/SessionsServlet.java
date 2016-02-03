@@ -3,6 +3,7 @@ package ru.samvel.jetty.servlets.account;
 import ru.samvel.jetty.accounts.AccountService;
 import ru.samvel.jetty.accounts.UserProfile;
 import com.google.gson.Gson;
+import ru.samvel.jetty.util.MD5Hax;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,20 +40,22 @@ public class SessionsServlet extends HttpServlet {
         String login = request.getParameter("login");
         String pass = request.getParameter("pass");
 
-        if (login == null || pass == null) {
+        String passHex = MD5Hax.makeHax(pass);
+
+        if (login == null || passHex == null) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
         UserProfile profile = accountService.getUserByLogin(login);
-        if (profile == null || !profile.getPass().equals(pass)) {
+        if (profile == null || !profile.getPass().equals(passHex)) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
-        if (profile.getPass().equals(login) && profile.getPass().equals(pass)) {
+        if (profile.getPass().equals(login) && profile.getPass().equals(passHex)) {
             accountService.addSession(request.getSession().getId(), profile);
             Gson gson = new Gson();
             String json = gson.toJson(profile);

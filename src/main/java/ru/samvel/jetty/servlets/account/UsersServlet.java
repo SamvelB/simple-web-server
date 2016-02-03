@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import ru.samvel.jetty.accounts.AccountService;
 import ru.samvel.jetty.accounts.UserProfile;
 import ru.samvel.jetty.templater.PageGenerator;
+import ru.samvel.jetty.util.MD5Hax;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +35,9 @@ public class UsersServlet extends HttpServlet {
         String pass = request.getParameter("pass");
         String email = request.getParameter("email");
 
-        accountService.addNewUser(new UserProfile(login, pass, email));
+        String passHex = MD5Hax.makeHax(pass);
+
+        accountService.addNewUser(new UserProfile(login, passHex, email));
 
         UserProfile profile = accountService.getUserByLogin(login);
         accountService.addSession(request.getSession().getId(), profile);

@@ -90,6 +90,11 @@
             <artifactId>h2</artifactId>
             <version>${com.h2database.h2.version}</version>
         </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
 
     </dependencies>
 
