@@ -47,6 +47,18 @@ public class PageGenerator {
         return stream.toString();
     }
 
+/*    public String getPageJson(String filename, String gsonString) {
+        Writer stream = new StringWriter();
+        try {
+            Template template = cfg.getTemplate(HTML_DIR + File.separator + filename);
+            template.process(gsonString, stream);
+        }
+        catch (IOException | TemplateException e) {
+            e.printStackTrace();
+        }
+        return stream.toString();
+    }*/
+
     public String getPage(String filename) {
         Writer stream = new StringWriter();
         try {

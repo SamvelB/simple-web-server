@@ -1,11 +1,11 @@
 package ru.samvel.jetty.dbService;
 
 
-import org.h2.jdbcx.JdbcDataSource;
 import ru.samvel.jetty.dbService.dao.UsersDAO;
 import ru.samvel.jetty.dbService.dataSets.UsersDataSet;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -14,7 +14,7 @@ public class DBService {
     private final Connection connection;
 
     public DBService() {
-        this.connection = getH2Connection();
+        this.connection = getMysqlConnection();
     }
 
     public UsersDataSet getUser(long id) throws DBException {
@@ -66,13 +66,27 @@ public class DBService {
             e.printStackTrace();
         }
     }*/
+@SuppressWarnings("UnusedDeclaration")
+public static Connection getMysqlConnection() {
+    try {
+        DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").newInstance());
+
+        String url = "jdbc:mysql://mysql-56041.srv.hoster.ru:3306/srv56041_bay?user=srv56041_samvel&password=1252127&useUnicode=true&characterEncoding=UTF-8";
+        Connection connection = DriverManager.getConnection(url.toString());
+
+        return connection;
+    } catch (SQLException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
 
 
-    public static Connection getH2Connection() {
+/*    public static Connection getH2Connection() {
         try {
-            String url = "jdbc:h2:./h2db";
-            String name = "tully";
-            String pass = "tully";
+            String url = "jdbc:mysql://mysql-56041.srv.hoster.ru:3306/srv56041_bay";
+            String name = "srv56041_samvel";
+            String pass = "1252127";
 
             JdbcDataSource ds = new JdbcDataSource();
             ds.setURL(url);
@@ -85,5 +99,5 @@ public class DBService {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 }

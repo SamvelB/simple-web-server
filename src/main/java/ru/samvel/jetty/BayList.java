@@ -6,6 +6,14 @@ import java.util.Map;
 
 public class BayList {
 
+    private String name;
+    private String amount;
+
+    public BayList(String name, String amount) {
+        this.name = name;
+        this.amount = amount;
+    }
+
 
     public Map<String, Object> createBayList() {
         Map<String, Object> bayList = new HashMap<>();

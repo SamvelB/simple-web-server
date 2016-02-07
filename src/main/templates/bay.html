@@ -7,18 +7,90 @@
 <body>
 <h1>Bay</h1>
 <ul>
-    <li><a href="/">Index</a></li>
+    <li><a href="/index">Index</a></li>
     <li><a href="form">Form</a></li>
     <li><a href="page">Page</a></li>
 </ul>
 
+<div>
+    <label>
+        <div>Название</div>
+        <input id="name" type="text" name="name" placeholder="Название" />
+    </label><br /><br />
+    <label>
+        <div>Количество</div>
+        <input id="amount" type="text" name="amount" placeholder="Количество" />
+    </label><br /><br />
+    <label>
+        <input id="send-bay-set" type="submit" value="Отправить">
+    </label>
+</div>
+<ul id="bay-list"></ul>
 
-${message}
-<!--<#list listElements as items>
-        <p>${items.NAME} - ${items.AMOUNT}</p>
-</#list>-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //url: '/baylist'
+
+        $.getJSON("/baylist", function(result){
+            $.each(result, function(i, field){
+                $("#bay-list").append("<li>" + i + " " + field.name + " " + field.amount + "</li>")
+            });
+        });
 
 
+
+
+        $(".navigation-item.n2").click(function(){
+
+            if($(".form").hasClass("active")){
+                $(".form").removeClass("active");
+            }
+            else {
+                $(".form").addClass("active");
+            }
+        });
+
+        $(".navigation-item.n4").click(function(){
+            location.reload();
+        });
+
+
+
+
+        $("#send-bay-set").click(function () {
+            var name = $("#name").val();
+            var amount = $("#amount").val();
+            console.log("amount: " + amount);
+            if(name.length > 1){
+                $.post(
+                    '/newbay',   //Указываете файл где будет обработка переменной.
+                    { name: name, amount: amount },    //Передаете переменную. В данном случае, она будет доступна $_POST['remove']
+                    function( d ) {
+                        location.reload();
+                    });
+                //$(this).addClass('checked');
+            }
+
+        });
+
+
+        $('.page-body-row-item-list').click(function(){
+            var req = $(this).find(".page-body-row-item-list-name").html();
+            var isAdmin = confirm("Удалить пунк меню: " + req);
+            if(isAdmin == true) {
+                $.post(
+                        '../modules/delete.php',   //Указываете файл где будет обработка переменной.
+                        { remove: req, page: 'bay' },    //Передаете переменную. В данном случае, она будет доступна $_POST['remove']
+                        function( d ) {
+                            //alert("Пункт: " + req + " удален"); //В случае успеха выполнения PHP кода, вы увидите это сообщение!
+                        });
+                $(this).addClass('checked');
+            }
+        });
+
+    });
+</script>
 </body>
 </html>
 

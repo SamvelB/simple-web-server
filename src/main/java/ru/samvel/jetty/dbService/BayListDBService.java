@@ -1,10 +1,10 @@
 package ru.samvel.jetty.dbService;
 
-import org.h2.jdbcx.JdbcDataSource;
 import ru.samvel.jetty.dbService.dao.BayListDAO;
 import ru.samvel.jetty.dbService.dataSets.BayListDataSet;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
@@ -14,7 +14,7 @@ public class BayListDBService {
     private final Connection connection;
 
     public BayListDBService() {
-        this.connection = getH2Connection();
+        this.connection = getMysqlConnection();
     }
 
     public BayListDataSet getBayListID(long id) throws DBException {
@@ -24,6 +24,7 @@ public class BayListDBService {
             throw new DBException(e);
         }
     }
+
     public Map<Integer, Map<String, String>> getBayList() throws DBException {
         try {
             return (new BayListDAO(connection).getBayList());
@@ -36,7 +37,7 @@ public class BayListDBService {
         try {
             connection.setAutoCommit(false);
             BayListDAO dao = new BayListDAO(connection);
-            dao.createTable();
+            //dao.createTable();
             dao.insertBayList(bayName, amount);
             connection.commit();
             return dao.getBayListName(bayName);
@@ -56,41 +57,28 @@ public class BayListDBService {
 
     public void cleanUp() throws DBException {
         BayListDAO dao = new BayListDAO(connection);
-        try {
-            dao.dropTable();
-        } catch (SQLException e) {
-            throw new DBException(e);
-        }
+        //try {
+        //dao.dropTable();
+        //} catch (SQLException e) {
+        //throw new DBException(e);
+        //}
     }
 
-/*    public void printConnectInfo() {
+    @SuppressWarnings("UnusedDeclaration")
+    public static Connection getMysqlConnection() {
         try {
-            System.out.println("DB name: " + connection.getMetaData().getDatabaseProductName());
-            System.out.println("DB version: " + connection.getMetaData().getDatabaseProductVersion());
-            System.out.println("Driver: " + connection.getMetaData().getDriverName());
-            System.out.println("Autocommit: " + connection.getAutoCommit());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
+            DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").newInstance());
 
+            String url = "&useUnicode=true&characterEncoding=UTF-8";
+            Connection connection = DriverManager.getConnection(url.toString());
 
-    public static Connection getH2Connection() {
-        try {
-            String url = "jdbc:h2:./h2db";
-            String name = "tully";
-            String pass = "tully";
-
-            JdbcDataSource ds = new JdbcDataSource();
-            ds.setURL(url);
-            ds.setUser(name);
-            ds.setPassword(pass);
-
-            Connection connection = DriverManager.getConnection(url, name, pass);
             return connection;
-        } catch (SQLException e) {
+        } catch (SQLException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;
     }
+
+
 }
+

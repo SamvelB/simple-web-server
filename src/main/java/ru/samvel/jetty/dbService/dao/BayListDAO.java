@@ -25,8 +25,8 @@ public class BayListDAO {
         });
     }
 
-    public long getBayListName(String bayName) throws SQLException {
-        return executor.execQuery("select * from bay where bayName='" + bayName + "'", result -> {
+    public long getBayListName(String name) throws SQLException {
+        return executor.execQuery("select * from bay where name='" + name + "'", result -> {
             result.next();
             return result.getLong(1);
         });
@@ -37,7 +37,7 @@ public class BayListDAO {
             int i = 0;
             while (result.next()) {
                 Map<String, String> dataSet = new HashMap<>();
-                dataSet.put("bayName", result.getString("bayName"));
+                dataSet.put("name", result.getString("name"));
                 dataSet.put("amount", result.getString("amount"));
                 allDataSet.put(Integer.valueOf(result.getString("ID")), dataSet);
                 i++;
@@ -47,15 +47,15 @@ public class BayListDAO {
         return allDataSet;
     }
 
-    public void insertBayList(String bayName, String amount) throws SQLException {
-        executor.execUpdate("insert into bay (bayName, amount) values ('" + bayName + "', '" + amount + "')");
+    public void insertBayList(String name, String amount) throws SQLException {
+        executor.execUpdate("insert into bay (name, amount) values ('" + name + "', '" + amount + "')");
     }
 
     public void createTable() throws SQLException {
-        executor.execUpdate("create table if not exists bay (id bigint auto_increment, bayName varchar(256), amount varchar(256), primary key (id))");
+        executor.execUpdate("create table if not exists bay (id bigint auto_increment, name varchar(256), amount varchar(256), primary key (id))");
     }
 
-    public void dropTable() throws SQLException {
+/*    public void dropTable() throws SQLException {
         executor.execUpdate("drop table bay");
-    }
+    }*/
 }

@@ -4,12 +4,12 @@ package ru.samvel.jetty.dbService.dataSets;
 @SuppressWarnings("UnusedDeclaration")
 public class BayListDataSet {
     private long id;
-    private String bayName;
+    private String name;
     private String amount;
 
-    public BayListDataSet(long id, String bayName, String amount) {
+    public BayListDataSet(long id, String name, String amount) {
         this.id = id;
-        this.bayName = bayName;
+        this.name = name;
         this.amount = amount;
     }
 
@@ -17,7 +17,7 @@ public class BayListDataSet {
         return id;
     }
     public String getName() {
-        return bayName;
+        return name;
     }
     public String getAmount() {
         return amount;
@@ -26,6 +26,6 @@ public class BayListDataSet {
 
     @Override
     public String toString() {
-        return "BayListDataSet {" + "id = " + id + ", bayName = '" + bayName + "', amount = " + amount + "'}";
+        return "BayListDataSet {" + "id = " + id + ", name = '" + name + "', amount = " + amount + "'}";
     }
 }

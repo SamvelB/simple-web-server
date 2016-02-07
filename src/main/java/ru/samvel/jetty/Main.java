@@ -10,32 +10,27 @@ import ru.samvel.jetty.accounts.AccountService;
 import ru.samvel.jetty.accounts.UserProfile;
 import ru.samvel.jetty.dbService.BayListDBService;
 import ru.samvel.jetty.dbService.DBException;
-import ru.samvel.jetty.dbService.dataSets.BayListDataSet;
 import ru.samvel.jetty.servlets.*;
 import ru.samvel.jetty.servlets.account.SessionsServlet;
 import ru.samvel.jetty.servlets.account.UsersServlet;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        ArrayList<String> bayNames = new ArrayList<>();
+        Map<String, String> bayNames = new HashMap<>();
+        //bayNames.put("Samvel", "1 шт");
+        //bayNames.put("Vasya", "2 шт");
+        //bayNames.put("Ivan", "3 шт");
+
         BayListDBService bayListDBService = new BayListDBService();
         try {
-            bayNames.add("Samvel");
-            bayNames.add("Vasya");
-            bayNames.add("Ivan");
-
-            long bayListId = bayListDBService.addBayList("название", "14 шт");
-            BayListDataSet bayListDataSet = bayListDBService.getBayListID(bayListId);
-
-            for (int i=0; i<=2; i++){
-                bayListDBService.addBayList(bayNames.get(i), "14 шт");
+            for (Map.Entry<String, String> entry : bayNames.entrySet()){
+                bayListDBService.addBayList(entry.getKey(), entry.getValue());
             }
-            System.out.println("Added user id: " + bayListId);
-            System.out.println("User data set: " + bayListDataSet);
 
             BayListDBService bayListDataSetAll = new BayListDBService();
             System.out.println("User data set ALL: " + bayListDataSetAll.getBayList());
@@ -56,6 +51,10 @@ public class Main {
         context.addServlet(new ServletHolder(new MainRequestsServlet()), "/main");
 
         context.addServlet(new ServletHolder(new BayRequestsServlet()), "/bay");
+        context.addServlet(new ServletHolder(new BayListRequestsServlet()), "/baylist");
+        context.addServlet(new ServletHolder(new NewBayRequestsServlet()), "/newbay");
+
+
         context.addServlet(new ServletHolder(new FormRequestsServlet()), "/form");
         context.addServlet(new ServletHolder(new PageRequestsServlet()), "/page");
         context.addServlet(new ServletHolder(new SamvelRequestsServlet()), "/samvel");
